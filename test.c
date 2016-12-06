@@ -22,6 +22,11 @@ int main(){
     puts("printing reverse");
     print(list);
     struct iter *iter = iter_init(list);
+    puts("ITERATOR:");
+    while(iter_has_next(iter)){
+        char *s = iter_next(iter);
+        puts(s);
+    }
     iter_destroy(iter);
     free_list(list);
 }

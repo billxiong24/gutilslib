@@ -8,7 +8,7 @@ struct iter{
 };
 struct iter *iter_init(List *list); 
 void *iter_next(struct iter *);
-int iter_has_next(struct iter *, List *);
+int iter_has_next(struct iter *);
 void iter_destroy(struct iter *iter);
 
 
