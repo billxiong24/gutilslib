@@ -31,7 +31,7 @@ List *init_list(){
     return list;
 }
 int insert(List ** list, void *val, int index){
-    if(!index){
+    if(!index || !(*list)->wrapper){
         struct node **w = (struct node **) &(*list)->wrapper;
         struct node *node = new_node(val);
         node->next = *w;

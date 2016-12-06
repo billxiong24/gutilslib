@@ -21,6 +21,7 @@ int main(){
     reverse(&list);
     puts("printing reverse");
     print(list);
+
     struct iter *iter = iter_init(list);
     puts("ITERATOR:");
     while(iter_has_next(iter)){

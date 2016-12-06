@@ -1,8 +1,11 @@
 #ifndef L_ITER_H
 #define L_ITER_H
 #include "list.h"
+
+#ifdef TYPE_CHECK
+#undef TYPE_CHECK
 #define TYPE_CHECK(var, type) {__typeof(var) *__var; __var = (type *) NULL;}
-    
+#endif    
 struct iter{
     void *curr_index;
 };
