@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "list.h"
+#include "l_iter.h"
 int main(){
     List *list = init_list();
     append(&list, "hello world");
@@ -20,6 +21,7 @@ int main(){
     reverse(&list);
     puts("printing reverse");
     print(list);
+    struct iter *iter = iter_init(list);
+    iter_destroy(iter);
     free_list(list);
-
 }

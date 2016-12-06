@@ -1,13 +1,28 @@
 #include "list.h"
+#include "l_iter.h"
+
 struct node{
     struct node *next;
     void *val;
 };
+static struct node *reversed_list(struct node *);
 static struct node *new_node(void *);
+
 static struct node *new_node(void *val){
     struct node *node = malloc(sizeof(*node));
     node->val = val;
     return node;
+}
+static struct node *reversed_list(struct node *head){
+    struct node *prev = NULL;
+    struct node *trav = head;
+    while(trav){
+        struct node *next = trav->next;
+        trav->next = prev;
+        prev = trav;
+        trav = next;
+    }
+    return prev;
 }
 List *init_list(){
     List *list = malloc(sizeof(*list));
@@ -102,30 +117,30 @@ void *get(List *list, int index){
     }
     return trav->val;
 }
-static struct node *reversed_list(struct node *);
 void reverse(List ** list){    
     struct node **head = (struct node **) &(*list)->wrapper;
     *head = reversed_list(*head);
-}
-static struct node *reversed_list(struct node *head){
-    struct node *prev = NULL;
-    struct node *trav = head;
-    while(trav){
-        struct node *next = trav->next;
-        trav->next = prev;
-        prev = trav;
-        trav = next;
-    }
-//    while(prev){
-//        puts((char *) prev->val);
-//        prev = prev->next;
-//    }
-    return prev;
 }
 void sort(List *list){
 }
 size_l size(List *list){
     return list->size;
+}
+
+void for_each(List **list, void (*func)(int, void *)){
+    struct node *head = (struct node *) (*list)->wrapper;
+    struct node *trav = head;
+    for(int i = 0; trav; i++, trav = trav->next){
+        func(i, trav->val);
+    }
+}
+void for_each_arr(List *list, void **arr, void (*func)(void **, int, void *)){
+    struct node *head = (struct node *) list->wrapper;
+    struct node *trav = head;
+    for(int i = 0; trav; i++, trav = trav->next){
+        func(arr, i, trav->val);
+    }
+
 }
 void print(List * list){
     struct node *head = (struct node *) list->wrapper;
