@@ -11,8 +11,17 @@ int main(){
     push(&pq, "zzzebra");
 
     push(&pq, "abre");
-
-    puts((char *) peek(pq));
-
+    
+    puts((char *) poll(&pq));
+    puts((char *) poll(&pq));
+    puts((char *) poll(&pq));
+    push(&pq, "test");
+    push(&pq, "fdsa");
+    push(&pq, "zelda");
+    puts((char *) poll(&pq));
+    puts((char *) poll(&pq));
+    puts((char *) poll(&pq));
+    push(&pq, "zelda");
+    puts((char *) poll(&pq));
     return 0;
 }
