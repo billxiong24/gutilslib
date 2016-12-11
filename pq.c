@@ -10,7 +10,7 @@ static void exchange(void **arr, int i, int j);
 static void swim(PQ *pq, int index);
 static void sink(PQ *pq, int index, int size);
 static void print(void **arr, int size);
-static void resize(struct heap **, int old_size, int new_size);
+static void resize(struct heap *);
 
 
 PQ *init_pq(int size, int (*cmp)(void *, void *)){
@@ -28,8 +28,8 @@ void push(PQ **pq, void *val){
     heap->arr[++heap->curr_index] = val;
     swim(*pq, heap->curr_index);
     if(heap->curr_index == heap->size){
-        resize(&heap, heap->size, heap->size * 2);
-        heap->size *=2;
+        printf("%d \n", heap->size);
+        resize(heap);
     }
     //print(heap->arr, heap->curr_index);
 }
@@ -64,14 +64,10 @@ void free_queue(PQ *pq){
     free(pq);
 }
 
-static void resize(struct heap **heap, int old_size, int new_size){
-    void **ptr = malloc(sizeof(void *) * new_size);
-    void **arr = (*heap)->arr;
-    for(int i = 0; i < old_size; i++){
-        ptr[i] = arr[i];
-    }
-    free(arr);
-    (*heap)->arr = ptr;
+static void resize(struct heap *heap){
+    //TODO wtf is this have to fix resize 
+   heap->arr = realloc(heap->arr, heap->size + 600);
+   heap->size +=600;
 }
 
 static void exchange(void **arr, int i, int j){

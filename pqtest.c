@@ -3,12 +3,17 @@
 #include <string.h>
 
 int main(){
-    PQ *pq = init_pq(32, (int(*)(void *, void *))strcmp);
+    PQ *pq = init_pq(3, (int(*)(void *, void *))strcmp);
     push(&pq, "heloo");
     push(&pq, "awf");
     push(&pq, "howdy");
     push(&pq, "boaer");
     push(&pq, "xxy");
+    push(&pq, "iasdf");
+    push(&pq, "iasdf");
+    push(&pq, "iasdf");
+    push(&pq, "iasdf");
+    push(&pq, "iasdf");
     push(&pq, "iasdf");
     push(&pq, "olaf");
     puts((char *)poll(&pq));
