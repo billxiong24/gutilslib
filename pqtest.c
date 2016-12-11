@@ -3,25 +3,23 @@
 #include <string.h>
 
 int main(){
-    PQ *pq = init_pq((int(*)(void *, void *))strcmp);
-    push(&pq, "hi");
-    push(&pq, "wont work");
-    push(&pq, "xray");
-    push(&pq, "fourth");
-    push(&pq, "zzzebra");
-
-    push(&pq, "abre");
-    
-    puts((char *) poll(&pq));
-    puts((char *) poll(&pq));
-    puts((char *) poll(&pq));
-    push(&pq, "test");
-    push(&pq, "fdsa");
-    push(&pq, "zelda");
-    puts((char *) poll(&pq));
-    puts((char *) poll(&pq));
-    puts((char *) poll(&pq));
-    push(&pq, "zelda");
-    puts((char *) poll(&pq));
+    PQ *pq = init_pq(32, (int(*)(void *, void *))strcmp);
+    push(&pq, "heloo");
+    push(&pq, "awf");
+    push(&pq, "howdy");
+    push(&pq, "boaer");
+    push(&pq, "xxy");
+    push(&pq, "iasdf");
+    push(&pq, "olaf");
+    puts((char *)poll(&pq));
+    puts((char *)poll(&pq));
+    puts((char *)poll(&pq));
+    puts((char *)poll(&pq));
+    puts((char *)poll(&pq));
+    push(&pq, "zebra");
+    push(&pq, "yeexrt");
+    puts((char *)poll(&pq));
+    puts((char *)poll(&pq));
+    free_queue(pq);
     return 0;
 }
