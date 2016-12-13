@@ -1,7 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 #include <stdlib.h>
-
+//TODO reinit causes invalid read size 8 for some reason
 typedef struct{
     void *head;
     int (*cmp)(void *, void *);
@@ -9,7 +9,7 @@ typedef struct{
 }PQ;
 
 PQ *init_pq(int size, int (*)(void *, void *));
-PQ *reinit_pq(PQ *, int size);
+void reinit_pq(PQ **, int size);
 void push(PQ **, void *val);
 void *poll(PQ **);
 void *peek(PQ *);

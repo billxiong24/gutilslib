@@ -1,4 +1,5 @@
 #include "pq.h"
+//TODO add variable arguments to init, reinit
 
 struct heap{
     void **arr;
@@ -23,11 +24,13 @@ PQ *init_pq(int size, int (*cmp)(void *, void *)){
     heap->curr_index = 0;
     return pq;
 }
-PQ *reinit_pq(PQ *pq, int size){
-    struct heap *heap = (struct heap *) pq->head;
+void reinit_pq(PQ **pq, int size){
+    struct heap *heap = (struct heap *) (*pq)->head;
     heap->arr = realloc(heap->arr, sizeof(void *) * (size + 1));
+    for(int i = heap->size; i < size; i++){
+        heap->arr[i] = NULL; 
+    }
     heap->size = size;
-    return pq; 
 }
 void push(PQ **pq, void *val){
     struct heap *heap = (struct heap *) (*pq)->head;
