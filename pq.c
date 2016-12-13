@@ -23,15 +23,19 @@ PQ *init_pq(int size, int (*cmp)(void *, void *)){
     heap->curr_index = 0;
     return pq;
 }
+PQ *reinit_pq(PQ *pq, int size){
+    struct heap *heap = (struct heap *) pq->head;
+    heap->arr = realloc(heap->arr, sizeof(void *) * (size + 1));
+    heap->size = size;
+    return pq; 
+}
 void push(PQ **pq, void *val){
     struct heap *heap = (struct heap *) (*pq)->head;
     heap->arr[++heap->curr_index] = val;
     swim(*pq, heap->curr_index);
     if(heap->curr_index == heap->size){
-        printf("%d \n", heap->size);
-        resize(heap);
+        //resize(heap);
     }
-    //print(heap->arr, heap->curr_index);
 }
 void *poll(PQ **pq){
     struct heap *heap = (struct heap *) (*pq)->head;
@@ -66,8 +70,11 @@ void free_queue(PQ *pq){
 
 static void resize(struct heap *heap){
     //TODO wtf is this have to fix resize 
-   heap->arr = realloc(heap->arr, heap->size + 600);
-   heap->size +=600;
+   heap->arr = realloc(heap->arr, heap->size * 2);
+   for(int i = heap->size; i < heap->size * 2; ++i){
+       heap->arr[i] = malloc(sizeof(void *));
+   }
+   heap->size*=2;
 }
 
 static void exchange(void **arr, int i, int j){
@@ -101,7 +108,5 @@ static void swim(PQ *pq, int k){
 }
 static void print(void **arr, int size){
     for(int i = 1; i <= size; i++){
-        printf("%s ", (char *) arr[i]);
     }
-    puts("");
 }

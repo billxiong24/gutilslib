@@ -9,6 +9,7 @@ typedef struct{
 }PQ;
 
 PQ *init_pq(int size, int (*)(void *, void *));
+PQ *reinit_pq(PQ *, int size);
 void push(PQ **, void *val);
 void *poll(PQ **);
 void *peek(PQ *);
