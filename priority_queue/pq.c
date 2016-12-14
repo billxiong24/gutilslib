@@ -32,7 +32,7 @@ void reinit_pq(PQ **pq, int size){
     }
     heap->size = size;
 }
-void push(PQ **pq, void *val){
+void push_pq(PQ **pq, void *val){
     struct heap *heap = (struct heap *) (*pq)->head;
     heap->arr[++heap->curr_index] = val;
     swim(*pq, heap->curr_index);
@@ -40,24 +40,24 @@ void push(PQ **pq, void *val){
         //resize(heap);
     }
 }
-void *poll(PQ **pq){
+void *poll_pq(PQ **pq){
     struct heap *heap = (struct heap *) (*pq)->head;
     exchange(heap->arr, 1, heap->curr_index);
     sink(*pq, 1, heap->curr_index);
     return heap->arr[heap->curr_index--];
 }
-void *peek(PQ *pq){
+void *peek_pq(PQ *pq){
     struct heap *heap = (struct heap *) pq->head;
     return heap->arr[1];
 }
-int size(PQ *pq){
+int size_pq(PQ *pq){
     struct heap *heap = (struct heap *) pq->head;
     return heap->curr_index;
 }
-int is_empty(PQ *pq){
-   return size(pq) == 0;
+int is_empty_pq(PQ *pq){
+   return size_pq(pq) == 0;
 }
-void for_each(PQ *pq, void (*func)(int index, void *val)){
+void for_each_pq(PQ *pq, void (*func)(int index, void *val)){
     struct heap *heap = (struct heap *) pq->head;
     void **arr = heap->arr;
     for(int i = 0; i < heap->curr_index; i++){

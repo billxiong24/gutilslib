@@ -30,7 +30,7 @@ List *init_list(){
     list->wrapper = NULL;
     return list;
 }
-int insert(List ** list, void *val, int index){
+int insert_list(List ** list, void *val, int index){
     if(!index || !(*list)->wrapper){
         struct node **w = (struct node **) &(*list)->wrapper;
         struct node *node = new_node(val);
@@ -55,7 +55,7 @@ int insert(List ** list, void *val, int index){
     (*list)->size++;
 	return 1;    
 }
-void append(List **list, void *val){
+void append_list(List **list, void *val){
     if(!(*list)->wrapper){
         (*list)->wrapper = malloc(sizeof(struct node));
         struct node *head = (struct node *) (*list)->wrapper;
@@ -102,7 +102,7 @@ void *remove_node(List **list, int index){
     (*list)->size--;
     return ret;
 }
-void *get(List *list, int index){
+void *get_list(List *list, int index){
     if(!index){
         struct node *w = (struct node *) list->wrapper;
         return w->val;
@@ -117,24 +117,24 @@ void *get(List *list, int index){
     }
     return trav->val;
 }
-void reverse(List ** list){    
+void reverse_list(List ** list){    
     struct node **head = (struct node **) &(*list)->wrapper;
     *head = reversed_list(*head);
 }
-void sort(List *list){
+void sort_list(List *list){
 }
-size_l size(List *list){
+size_l size_list(List *list){
     return list->size;
 }
 
-void for_each(List **list, void (*func)(int, void *)){
+void for_each_list(List **list, void (*func)(int, void *)){
     struct node *head = (struct node *) (*list)->wrapper;
     struct node *trav = head;
     for(int i = 0; trav; i++, trav = trav->next){
         func(i, trav->val);
     }
 }
-void for_each_arr(List *list, void **arr, void (*func)(void **, int, void *)){
+void for_each_arr_list(List *list, void **arr, void (*func)(void **, int, void *)){
     struct node *head = (struct node *) list->wrapper;
     struct node *trav = head;
     for(int i = 0; trav; i++, trav = trav->next){
@@ -142,7 +142,7 @@ void for_each_arr(List *list, void **arr, void (*func)(void **, int, void *)){
     }
 
 }
-void print(List * list){
+void print_list(List * list){
     struct node *head = (struct node *) list->wrapper;
     for(struct node *trav = head; trav; trav = trav->next){
         puts((char *) trav->val);
