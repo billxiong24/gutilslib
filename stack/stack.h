@@ -9,12 +9,12 @@ typedef struct{
 }Stack;
 
 Stack *init_stack();
-int push(Stack **, void *val);
-void *pop(Stack **);
-void *peek(Stack *);
-int size(Stack *);
-int is_empty(Stack *);
-void for_each(Stack *, void (*)(int index, void *val));
+int push_stack(Stack **, void *val);
+void *pop_stack(Stack **);
+void *peek_stack(Stack *);
+int size_stack(Stack *);
+int is_empty_stack(Stack *);
+void for_each_stack(Stack *, void (*)(int index, void *val));
 void free_stack(Stack *);
 
 #endif

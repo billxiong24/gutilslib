@@ -11,7 +11,7 @@ Queue *init_queue(){
     queue->size = 0;
     return queue;
 }
-void push(Queue **queue, void *val){
+void push_queue(Queue **queue, void *val){
     (*queue)->size++;
     if(!(*queue)->head){
         (*queue)->head = malloc(sizeof(struct queue));
@@ -28,7 +28,7 @@ void push(Queue **queue, void *val){
     (*tail)->next = new_node;
     *tail = (*tail)->next;
 }
-void *poll(Queue **queue){
+void *poll_queue(Queue **queue){
    struct queue **head = (struct queue **) &(*queue)->head;
    void *ret = (*head)->val;
    struct queue *f = *head;
@@ -37,17 +37,17 @@ void *poll(Queue **queue){
    free(f);
    return ret;
 }
-void *peek(Queue *queue){
+void *peek_queue(Queue *queue){
     struct queue *head = (struct queue *) queue->head;
     return head->val;
 }
-int size(Queue *queue){
+int size_queue(Queue *queue){
     return queue->size;
 }
-int is_empty(Queue *queue){
+int is_empty_queue(Queue *queue){
     return queue->size == 0;
 }
-void for_each(Queue *queue, void (*func)(int index, void *val)){
+void for_each_queue(Queue *queue, void (*func)(int index, void *val)){
     struct queue *head = (struct queue *) queue->head;
     struct queue *trav = head;
     for(int i = 0; trav; trav = trav->next, ++i){

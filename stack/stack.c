@@ -11,7 +11,7 @@ Stack *init_stack(){
     s->size = 0;
 }
 
-int push(Stack **s, void *val){
+int push_stack(Stack **s, void *val){
     (*s)->size++;
     if(!(*s)->wrapper){
         (*s)->wrapper = malloc(sizeof(struct stack));
@@ -27,7 +27,7 @@ int push(Stack **s, void *val){
     *stack = new_node;
     return 1; 
 }
-void *pop(Stack **s){
+void *pop_stack(Stack **s){
     (*s)->size = (*s)->size ? (*s)->size-1 : 0;
     struct stack **stack = (struct stack **) &(*s)->wrapper;
     void *ret = (*stack)->val;
@@ -36,17 +36,17 @@ void *pop(Stack **s){
     free(to_free);
     return ret;
 }
-void *peek(Stack *s){
+void *peek_stack(Stack *s){
     struct stack *stack = (struct stack *) s->wrapper;
     return stack->val;
 }
-int size(Stack *s){
+int size_stack(Stack *s){
     return s->size; 
 }
-int is_empty(Stack *s){
+int is_empty_stack(Stack *s){
     return s->size == 0;
 }
-void for_each(Stack *s, void (*func)(int index, void *val)){
+void for_each_stack(Stack *s, void (*func)(int index, void *val)){
     struct stack *stack = (struct stack *) s->wrapper;
     struct stack *trav = stack;
     for(int i = 0; trav; trav = trav->next, ++i){
