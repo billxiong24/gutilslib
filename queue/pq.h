@@ -1,5 +1,6 @@
 #ifndef QUEUE_H
 #define QUEUE_H
+#include "queue.h"
 #include <stdlib.h>
 
 //TODO reinit causes invalid read size 8 for some reason
