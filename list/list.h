@@ -1,32 +1,48 @@
-#ifndef LIST_H
-#define LIST_H
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef LIST_H 
+#define LIST_H 
 
-#ifdef size_l
-#undef size_l
-#endif
-#define size_l unsigned long int
+/*
+ * List interface, used to implement linked list, 
+ * array list, etc.
+ */
+typedef struct list {
 
-typedef struct{
-    size_l size;
-    void *wrapper;
-    void *iterator;
-} List;
+    /*
+     * Function pointers constitute methods in the 
+     * "interface." Implementing files will assign these
+     * function pointers.
+     */
+    void *(*list_get)(struct list *, int index);
+    void (*list_sort)(struct list *);
+    int (*list_size)(struct list *);
+    void (*list_free)(struct list *);
+    void (*list_for_each)(struct list *, void (*)(int index, void * val));
+    /*
+     * These pass in double pointer to list in order to 
+     * directly modify struct itself
+     */
+    int (*list_insert)(struct list **, void *val, int index); 
+    void (*list_append)(struct list **, void *val);
+    void *(*list_remove)(struct list **, int index); 
+    void (*list_reverse)(struct list **); 
+} LIST;
 
-List *init_list(); //good
-int insert_list(List **, void *val, int index); //good
-void append_list(List **, void *val);//good
-void *remove_node(List **, int index); //good
-void *get_list(List *, int index);
-void reverse_list(List **); //good
-void sort_list(List *);
-size_l size_list(List *);//good
+/*
+ * Macro function definitions allow shortened access to interface 
+ * functions. However, implementing structs should have a declaration
+ * LIST list;
+ * as the first element of the implementing struct.
+ */
 
-void for_each_list(List **list, void (*)(int, void *));
-void for_each_arr_list(List *, void **,  void (*)(void **, int, void *));
-void print_list(List *); //for debugging
-void free_list(List *); //good
+#define LIST_GET(imp, index) imp->list.list_get((struct list *) imp, index)
+#define LIST_SORT(imp) imp->list.list_sort((struct list *) imp)
+#define LIST_SIZE(imp) imp->list.list_size((struct list *) imp)
+#define LIST_FOR_EACH(imp) imp->list.list_for_each((struct list *) imp)
 
+#define LIST_INSERT(imp, val, index) imp->list.list_insert((struct list **) &imp, val, index)
+#define LIST_APPEND(imp, val) imp->list.list_append((struct list **) &imp, val)
+#define LIST_REMOVE(imp, index) imp->list.list_remove((struct list **) &imp, index)
+#define LIST_REVERSE(imp) imp->list.list_reverse((struct list **) &imp)
+#define LIST_FREE(imp) imp->list.list_free((struct list *) imp)
 
-#endif
+#endif 
