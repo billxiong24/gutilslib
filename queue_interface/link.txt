@@ -1,0 +1,3 @@
+cc -c pqtest.c
+cc -c pq.c
+ ld -o pqtest pq.o pqtest.o /usr/lib/x86_64-linux-gnu/crt1.o /usr/lib/x86_64-linux-gnu/crti.o /usr/lib/x86_64-linux-gnu/libc.so /usr/lib/x86_64-linux-gnu/crtn.o -dynamic-linker /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
