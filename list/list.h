@@ -1,6 +1,6 @@
 #ifndef LIST_H 
 #define LIST_H 
-
+#include <stdlib.h>
 /*
  * List interface, used to implement linked list, 
  * array list, etc.

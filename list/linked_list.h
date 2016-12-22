@@ -1,7 +1,10 @@
 #ifndef LINKED_LIST_H
+
 #define LINKED_LIST_H
+#define __NODE_GUARD
 
 #include "list.h"
+#include "node_p.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,6 +12,7 @@
 #undef size_l
 #endif
 #define size_l unsigned long int
+
 
 typedef struct{
 
@@ -24,7 +28,7 @@ typedef struct{
      * generic pointer to internal linked list, 
      * provides encapsulation
      */
-    void *wrapper;
+    struct node *wrapper;
 
     /*
      * generic pointer to internal iterator struct,
@@ -33,8 +37,10 @@ typedef struct{
     void *iterator;
 } LINKED_LIST;
 
+
 LINKED_LIST *init_list(); 
 void for_each_arr_list(LINKED_LIST *, void **,  void (*)(void **, int, void *));
 void print_list(LINKED_LIST *); 
 
+#undef __NODE_GUARD
 #endif

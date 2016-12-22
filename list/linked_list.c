@@ -1,10 +1,6 @@
 #include "linked_list.h"
-//#include "l_iter.h"
+#include "linked_iter.h"
 
-struct node{
-    struct node *next;
-    void *val;
-};
 
 /* Implementing functions */
 int insert_list(LIST **, void *val, int index); 
@@ -23,15 +19,16 @@ void free_list(LIST *);
 static struct node *reversed_list(struct node *);
 static struct node *new_node(void *);
 
-static struct node *new_node(void *val){
+static struct node *new_node(void *val) {
     struct node *node = malloc(sizeof(*node));
     node->val = val;
     return node;
 }
-static struct node *reversed_list(struct node *head){
+
+static struct node *reversed_list(struct node *head) {
     struct node *prev = NULL;
     struct node *trav = head;
-    while(trav){
+    while(trav) {
         struct node *next = trav->next;
         trav->next = prev;
         prev = trav;
@@ -39,7 +36,9 @@ static struct node *reversed_list(struct node *head){
     }
     return prev;
 }
-LINKED_LIST *init_list(){
+
+
+LINKED_LIST *init_list() {
     LINKED_LIST *list = malloc(sizeof(*list));
     list->size = 0;
     list->wrapper = NULL;
@@ -57,7 +56,7 @@ LINKED_LIST *init_list(){
     return list;
 }
 
-int insert_list(LIST **l, void *val, int index){
+int insert_list(LIST **l, void *val, int index) {
     LINKED_LIST **list = (LINKED_LIST **) l;
     if(!index || !(*list)->wrapper) {
         struct node **w = (struct node **) &(*list)->wrapper;
@@ -86,9 +85,9 @@ int insert_list(LIST **l, void *val, int index){
 	return 1;    
 }
 
-void append_list(LIST **l, void *val){
+void append_list(LIST **l, void *val) {
     LINKED_LIST **list = (LINKED_LIST **) l;
-    if(!(*list)->wrapper){
+    if(!(*list)->wrapper) {
         (*list)->wrapper = malloc(sizeof(struct node));
         struct node *head = (struct node *) (*list)->wrapper;
         head->val = val;    
@@ -98,6 +97,7 @@ void append_list(LIST **l, void *val){
     
     struct node *head = (struct node *) (*list)->wrapper;
     struct node *trav;
+    
     //TODO optimize
     for(trav = head; trav->next; trav = trav->next);
     
@@ -105,9 +105,9 @@ void append_list(LIST **l, void *val){
     (*list)->size++;
 }
 
-void *remove_node(LIST **l, int index){
+void *remove_node(LIST **l, int index) {
     LINKED_LIST **list = (LINKED_LIST **) l;
-    if(!index){
+    if(!index) {
         struct node **w = (struct node **) &(*list)->wrapper;
         struct node *f = *w;
         void *ret = f;
@@ -119,12 +119,13 @@ void *remove_node(LIST **l, int index){
     struct node *head = (struct node *) (*list)->wrapper;
     struct node *prev = NULL;
     struct node *trav = head;
-    for(int ind = 0; trav && ind < index; ++ind){
+    for(int ind = 0; trav && ind < index; ++ind) {
         prev = trav;
         trav = trav->next;
 
     }
-    if(!trav){
+    
+    if(!trav) {
         return NULL;
     }
      
@@ -136,58 +137,58 @@ void *remove_node(LIST **l, int index){
     return ret;
 }
 
-void *get_list(LIST *l, int index){
+void *get_list(LIST *l, int index) {
     LINKED_LIST *list = (LINKED_LIST *) l;
-    if(!index){
+    if(!index) {
         struct node *w = (struct node *) list->wrapper;
         return w->val;
     }
     struct node *head = (struct node *) list->wrapper;
     struct node *trav = head;
-    for(int ind = 0; trav && ind < index; ++ind){
+    for(int ind = 0; trav && ind < index; ++ind) {
         trav = trav->next;
     }
-    if(!trav){
+    if(!trav) {
         return NULL;
     }
     return trav->val;
 }
 
-void reverse_list(LIST ** l){    
+void reverse_list(LIST ** l) {    
     LINKED_LIST **list = (LINKED_LIST **) l;
     struct node **head = (struct node **) &(*list)->wrapper;
     *head = reversed_list(*head);
 }
-void sort_list(LIST *list){
+void sort_list(LIST *list) {
 }
 
-int size_list(LIST *l){
+int size_list(LIST *l) {
     LINKED_LIST *list = (LINKED_LIST *) l;
     return list->size;
 }
 
-void for_each_list(LIST *l, void (*func)(int, void *)){
+void for_each_list(LIST *l, void (*func)(int, void *)) {
     LINKED_LIST *list = (LINKED_LIST *) l;
     struct node *head = (struct node *) list->wrapper;
     struct node *trav = head;
-    for(int i = 0; trav; i++, trav = trav->next){
+    for(int i = 0; trav; i++, trav = trav->next) {
         func(i, trav->val); }
 }
-void for_each_arr_list(LINKED_LIST *list, void **arr, void (*func)(void **, int, void *)){
+void for_each_arr_list(LINKED_LIST *list, void **arr, void (*func)(void **, int, void *)) {
     struct node *head = (struct node *) list->wrapper;
     struct node *trav = head;
-    for(int i = 0; trav; i++, trav = trav->next){
+    for(int i = 0; trav; i++, trav = trav->next) {
         func(arr, i, trav->val);
     }
 
 }
-void print_list(LINKED_LIST *list){
+void print_list(LINKED_LIST *list) {
     struct node *head = (struct node *) list->wrapper;
-    for(struct node *trav = head; trav; trav = trav->next){
+    for(struct node *trav = head; trav; trav = trav->next) {
         puts((char *) trav->val);
     }
 }
-void free_list(LIST *l){
+void free_list(LIST *l) {
     LINKED_LIST *list = (LINKED_LIST *) l;
     struct node *head = (struct node *) list->wrapper;
     while(head) {
