@@ -21,6 +21,7 @@ typedef struct list {
      * These pass in double pointer to list in order to 
      * directly modify struct itself
      */
+    void (*list_set)(struct list **, void *val, int index);
     int (*list_insert)(struct list **, void *val, int index); 
     void (*list_append)(struct list **, void *val);
     void *(*list_remove)(struct list **, int index); 
@@ -35,6 +36,7 @@ typedef struct list {
  */
 
 #define LIST_GET(imp, index) imp->list.list_get((struct list *) imp, index)
+#define LIST_SET(imp, val, index) imp->list.list_set((struct list *) imp, val, index)
 #define LIST_SORT(imp) imp->list.list_sort((struct list *) imp)
 #define LIST_SIZE(imp) imp->list.list_size((struct list *) imp)
 #define LIST_FOR_EACH(imp) imp->list.list_for_each((struct list *) imp)

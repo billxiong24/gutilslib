@@ -11,9 +11,6 @@ struct node *linked_iter_next(struct iter *iter);
 int linked_iter_has_next(struct iter *iter);
 void linked_iter_destroy(struct iter *iter);
 
-static void copy(void **arr, int index, void *val){
-    arr[index] = val;
-}
 
 LINKED_ITER *init_linked_iter(LINKED_LIST *list) {
 

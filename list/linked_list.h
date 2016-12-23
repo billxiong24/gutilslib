@@ -6,7 +6,6 @@
 #include "list.h"
 #include "node_p.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 #ifdef size_l
 #undef size_l
