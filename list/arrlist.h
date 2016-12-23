@@ -1,6 +1,8 @@
 #ifndef ARRLIST_H
 #define ARRLIST_H 
 
+/* For debugging, remove later */
+#include <stdio.h>
 #include "list.h"
 
 typedef struct{

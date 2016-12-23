@@ -21,6 +21,9 @@ void arrlist_append(struct list **, void *val);
 void *arrlist_remove(struct list **, int index); 
 void arrlist_reverse(struct list **); 
 
+/* Static Functions*/
+static void expand(ARR_LIST **, int size);
+
 ARR_LIST *init_arr_list(int size) {
     ARR_LIST *arr = malloc(sizeof(*arr));
 
@@ -77,27 +80,51 @@ void arrlist_free(struct list *list) {
 
 void arrlist_for_each(struct list *list, void (*func)(int index, void * val)) {
 
+
 }
 
-void list_set(struct list **list, void *val, int index) {
+void arrlist_set(struct list **list, void *val, int index) {
     ARR_LIST **arr = (ARR_LIST **) list;
     struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
     (*internal)->arr[index] = val;
 }
 
-int list_insert(struct list **list, void *val, int index) {
-
+int arrlist_insert(struct list **list, void *val, int index) {
+    ARR_LIST **arr = (ARR_LIST **) list;
+    struct arrlist *internal = (struct arrlist *) (*arr)->wrapper;
+    //TODO add better error checking
+    if(index < internal->curr_index) 
+        return 0;
+    
 }
  
-void list_append(struct list **list, void *val) {
+void arrlist_append(struct list **list, void *val) {
+    ARR_LIST **arr = (ARR_LIST **) list;
+    struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
 
+    (*internal)->arr[(*internal)->curr_index] = val;
+    puts((char *) (*internal)->arr[(*internal)->curr_index]); 
+    ++(*internal)->curr_index;
+    
+    printf("(*internal)->curr_index = %d\n", (*internal)->curr_index);
+    if((*internal)->curr_index >= (*internal)->size) {
+        int new_size = (*internal)->size * 2;
+        puts("reisizneg");
+        expand(arr, new_size);
+    }
 }
 
-void *list_remove(struct list **list, int index) {
-
+void *arrlist_remove(struct list **list, int index) {
+    
 }
  
-void list_reverse(struct list **list) {
+void arrlist_reverse(struct list **list) {
 
 }
- 
+
+static void expand(ARR_LIST **arr, int size) {
+    struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
+    
+    (*internal)->arr = realloc((*internal)->arr, (size + 1) * sizeof(void *));
+    (*internal)->size = (*internal)->size * 2;
+}
