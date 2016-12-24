@@ -98,7 +98,7 @@ int arrlist_insert(struct list **list, void *val, int index) {
     struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
 
     //TODO add better error checking
-    if(index < 0 || index >= (*internal)->curr_index) 
+    if(index < 0 || index > (*internal)->curr_index) 
         return 0;
 
     if((*internal)->curr_index >= (*internal)->size - 1) {
@@ -150,6 +150,11 @@ void arrlist_reverse(struct list **list) {
 
 }
 
+void **arr_list_to_array(ARR_LIST *arr) {
+    struct arrlist *internal = (struct arrlist *) arr->wrapper;
+    return internal->arr; 
+
+}
 static void expand(ARR_LIST **arr, int size) {
     struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
     

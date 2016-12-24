@@ -28,5 +28,6 @@ typedef struct{
 } ARR_LIST;
 
 ARR_LIST *init_arr_list(int size);
+void **arr_list_to_array(ARR_LIST *);
 
 #endif 
