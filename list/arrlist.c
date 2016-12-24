@@ -79,8 +79,12 @@ void arrlist_free(struct list *list) {
 }
 
 void arrlist_for_each(struct list *list, void (*func)(int index, void * val)) {
-
-
+    ARR_LIST *arr = (ARR_LIST *) list;
+    struct arrlist *internal = (struct arrlist *) arr->wrapper;
+    
+    for(int i = 0; i < internal->curr_index; ++i) {
+        func(i, internal->arr[i]);
+    }
 }
 
 void arrlist_set(struct list **list, void *val, int index) {
@@ -91,11 +95,23 @@ void arrlist_set(struct list **list, void *val, int index) {
 
 int arrlist_insert(struct list **list, void *val, int index) {
     ARR_LIST **arr = (ARR_LIST **) list;
-    struct arrlist *internal = (struct arrlist *) (*arr)->wrapper;
+    struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
+
     //TODO add better error checking
-    if(index < internal->curr_index) 
+    if(index < 0 || index >= (*internal)->curr_index) 
         return 0;
+
+    if((*internal)->curr_index >= (*internal)->size - 1) {
+        expand(arr, (*internal)->size * 2);
+    }
+
+    for(int i = (*internal)->curr_index; i >= index; --i) {
+        (*internal)->arr[i] = (*internal)->arr[i-1];
+    }
     
+    ++(*internal)->curr_index;
+    (*internal)->arr[index] = val;
+    return 1; 
 }
  
 void arrlist_append(struct list **list, void *val) {
@@ -106,16 +122,28 @@ void arrlist_append(struct list **list, void *val) {
     puts((char *) (*internal)->arr[(*internal)->curr_index]); 
     ++(*internal)->curr_index;
     
-    printf("(*internal)->curr_index = %d\n", (*internal)->curr_index);
-    if((*internal)->curr_index >= (*internal)->size) {
+    if((*internal)->curr_index >= (*internal)->size - 1) {
         int new_size = (*internal)->size * 2;
-        puts("reisizneg");
         expand(arr, new_size);
     }
 }
 
 void *arrlist_remove(struct list **list, int index) {
+    ARR_LIST **arr = (ARR_LIST **) list;
+    struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
     
+    if(index < 0 || index >= (*internal)->curr_index) {
+        return NULL;
+    }
+
+    void *ret = (*internal)->arr[index];
+
+    for(int i = index; i < (*internal)->curr_index - 1; ++i) {
+        (*internal)->arr[i] = (*internal)->arr[i + 1];
+    }
+
+    (*internal)->curr_index--;
+    return ret;
 }
  
 void arrlist_reverse(struct list **list) {
@@ -126,5 +154,5 @@ static void expand(ARR_LIST **arr, int size) {
     struct arrlist **internal = (struct arrlist **) &(*arr)->wrapper;
     
     (*internal)->arr = realloc((*internal)->arr, (size + 1) * sizeof(void *));
-    (*internal)->size = (*internal)->size * 2;
+    (*internal)->size = size;
 }
