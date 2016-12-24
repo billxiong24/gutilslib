@@ -13,10 +13,13 @@
  * Implementing structs should put this struct as the first
  * element of the struct for alignment/casting purposes. 
  */
-typedef struct iter{
+typedef struct iter {
     
     void *(*iter_next)(struct iter *);
     int (*iter_has_next)(struct iter *);
+
+    /* iter_remove needs to be implemented by linked, arraylist*/
+    void *(*iter_remove)(struct iter *);
     void (*iter_destroy)(struct iter *iter);
 
 } ITER;

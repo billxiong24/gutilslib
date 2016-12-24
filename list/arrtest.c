@@ -1,4 +1,5 @@
 #include "arrlist.h"
+#include "arrlist_iter.h"
 #include <stdio.h>
 
 void print(int index, void *val);
@@ -19,6 +20,14 @@ int main(void) {
     printf("LIST_SIZE(list) = %d\n", LIST_SIZE(list));
     puts("For each");
     LIST_FOR_EACH(list, print);
+
+    puts("ITERATOR TEST");
+    ARR_LIST_ITER *iterator = init_arrlist_iter(list);
+
+    while(ITER_HAS_NEXT(iterator)) {
+        puts((char *) ITER_NEXT(iterator));
+    }
+    ITER_DESTROY(iterator);
     LIST_FREE(list);
     
     return 0;

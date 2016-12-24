@@ -6,7 +6,6 @@ struct index {
 };
 
 /* Implemented iterator functions */
-struct iter *linked_get_iter(LINKED_LIST *);
 struct node *linked_iter_next(struct iter *iter);
 int linked_iter_has_next(struct iter *iter);
 void linked_iter_destroy(struct iter *iter);
