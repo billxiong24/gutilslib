@@ -24,9 +24,9 @@ ARR_LIST_ITER *init_arrlist_iter(ARR_LIST *arr) {
 
     /* Implement ITER interface by assigning function pointers*/
     iter->iter.iter_next = arrlist_iter_next;
+    iter->iter.iter_remove = arrlist_iter_remove;
     iter->iter.iter_has_next = arrlist_iter_has_next;
     iter->iter.iter_destroy = arrlist_iter_destroy;
-
     return iter;
 }
 
@@ -42,7 +42,13 @@ void *arrlist_iter_next(struct iter *iterator) {
 }
 
 void *arrlist_iter_remove(struct iter *iterator) {
+    ARR_LIST_ITER *iter = (ARR_LIST_ITER *) iterator;
+    struct index *ind = (struct index *) iter->wrapper;
     
+    if(ind->curr_index >= ind->size) 
+        return NULL;
+    
+    return LIST_REMOVE(ind->list, ind->curr_index);
 }
 
 int arrlist_iter_has_next(struct iter *iterator) {
